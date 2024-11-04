@@ -1,0 +1,40 @@
+---
+import type { InferEntrySchema } from "astro:content";
+
+type Post = {
+  id: "first-post.md";
+  slug: "first-post";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">;
+};
+const { posts } = Astro.props;
+---
+
+<!-- ============================================ --><!--                Featured Posts                --><!-- ============================================ -->
+<div class="blog-sidebar">
+  <!--Featured-->
+  <div class="blog-featured-group">
+    <span class="blog-header">Featured Posts</span>
+    {
+      posts.map((post: Post) => (
+        <a class="blog-feature" href={`/blog/${post.slug}`}>
+          <picture class="blog-featureImage">
+            <img
+              src={post.data.heroImage}
+              alt={post.data.imageAlt}
+              width="60"
+              height="60"
+              decoding="async"
+            />
+          </picture>
+          <div class="content-group">
+            <h3 class="feature-h3">{post.data.title}</h3>
+            <span class="feature-date">{post.data.pubDate}</span>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+  <!--Add anything else in the sidebar below-->
+</div>
